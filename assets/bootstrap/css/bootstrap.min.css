@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Kanit');
+@import url('https://fonts.googleapis.com/css?family=Kanit:200,300,400,500');
 
 /*!
  * bootswatch v3.3.6
@@ -1354,7 +1354,7 @@ html {
 body {
   font-family: "Kanit", serif;
   font-size: 15px;
-  /*line-height: 1.42857143;*/
+  line-height: 1.42857143;
   color: #777777;
   background-color: #ffffff
 }
@@ -6981,9 +6981,9 @@ button.close {
 }
 
 .navbar {
-  font-size: 18px;
-  font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
-  font-weight: 700
+  font-size: 15px;
+  font-family: "kanit", sans-serif;
+  font-weight: 500
 }
 
 .navbar-default .badge {

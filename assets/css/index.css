@@ -1,0 +1,46 @@
+html body {
+    background-color: #27314c;
+}
+
+.reviewer-name{
+  margin-right:10px;
+}
+
+.site-footer{
+  padding:20px 0;
+  text-align:center;
+}
+
+.btn-login-submit{
+  margin-top: 20px;
+  width: 300;
+  color: white;
+  background-color: #18a59f;
+}
+
+.btn.write-review{
+  float:right;
+  margin-top:-6px;
+}
+
+.well.login-box {
+    width:300px;
+    margin:0 auto;;
+}
+
+.well{
+    background-color:#fff!important;
+    border-radius:0!important;
+    border:none!important;
+}
+
+.loginplace {
+  /*position: absolute;*/
+  margin: auto;
+  width: 300px;
+  margin-bottom: 40px;
+  /*height: 200px;*/
+}
+.center{
+  margin: auto;
+}

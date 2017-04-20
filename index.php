@@ -1,3 +1,31 @@
+<?php
+   include("config.php");
+   session_start();
+   if(isset($_SESSION['login_user'])){
+      header("location:welcome.php");
+   }
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form
+
+      $myusername = mysqli_real_escape_string($db,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['password']);
+
+      $sql = "SELECT personalID FROM users WHERE username = '$myusername' and password = '$mypassword'";
+      $result = mysqli_query($db,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $count = mysqli_num_rows($result);
+
+      // If result matched $myusername and $mypassword, table row must be 1 row
+
+      if($count == 1) {
+         $_SESSION['login_personalID'] = $row['personalID'];
+         header("location: welcome.php");
+      }else {
+         $error = "Your Login Name or Password is invalid";
+      }
+   }
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -29,12 +57,12 @@
           <div class="col-md-12">
               <img src="assets/img/login_logo.png" alt="DBDB login" style="width: 300px; margin: auto; margin-top: 40px; margin-bottom: 30px;  display: block;">
               <div class="loginplace">
-                <form action="">
+                <form action="" method="POST">
                     <div class="form-group">
-                        <input value='' id="username-email" placeholder="Username" type="text" class="form-control" />
+                        <input type="text" id="username-email" placeholder="Username" type="text" name = "username" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <input id="password" value='' placeholder="Password" type="text" class="form-control" />
+                        <input type="password" id="password" placeholder="Password" type="text" name = "password" class="form-control" />
                     </div>
                         <input type="submit" class="btn btn-block btn-login-submit" value="Login"/>
                 </form>

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
-  <link rel="stylesheet" href="assets/css/student.css">
+  <link rel="stylesheet" href="assets/css/course_detail.css">
 </head>
 
 <body>
@@ -22,8 +22,8 @@
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="dashboard.php">ภาพรวม</a></li>
-          <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
-          <li><a href="course.php">ข้อมูลรายวิชา</a></li>
+          <li><a href="student.php">ข้อมูลนิสิต</a></li>
+          <li class="active"><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
           <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
         </ul>
@@ -47,9 +47,9 @@
               </ul>
             </div>
           </div>
-          <div class="function-head-icon"><img src="assets/img/student_icon.png" alt="Student" /></div>
-          <div class="function-head-text">Student
-            <div class="function-head-subtext">ข้อมูลนิสิต</div>
+            <div class="function-head-icon"><img src="assets/img/course_detail_icon.png" alt="Course detail" /></div>
+          <div class="function-head-text">2110422
+            <div class="function-head-subtext">DB MGT SYS DESIGN</div>
           </div>
         </div>
       </div>
@@ -58,59 +58,74 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-12">
-          <table style="width:100%;" class="student-table">
+      <div class="col-md-8">
+        <div class="col-md-12 data-box">
+          <div class="data-box-header">
+            ข้อมูลรายวิชา
+          </div>
+            <table style="width:100%;" class="dashboard-table">
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="data-header">ผู้สอน : </span>
+                    <span class="data-detail">รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="col-md-12 data-box">
+          <div class="data-box-header">
+            สถานะ
+          </div>
+          <table style="width:100%;" class="dashboard-table">
+            <tbody>
+              <tr>
+                <td>
+                  <span class="data-header">จำนวนที่เปิดรับ : </span>
+                  <span class="data-detail">99</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="data-header">จำนวนตอนเรียน : </span>
+                  <span class="data-detail">3</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12 data-box-tableinside">
+          <div class="data-box-header">
+            นิสิตที่ลงทะเบียน
+          </div>
+          <table  class="student-table">
             <thead>
               <tr>
                 <th style="width:70px; text-align:center;"></th>
-                <th style="width:150px;">รหัสนิสิต</th>
+                <th style="width:140px;">เลขประจำตัวนิสิต</th>
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:100px;">GPA</th>
-                <th style="width:100px;">ลาศึกษาต่อ</th>
-                <th style="width:100px;">พักการศึกษา</th>
+                <th style="width:120px;">ผลการศึกษา</th>
+                <th style="width:120px;">การเข้าเรียน</th>
                 <th style="width:145px;">การดำเนินการ</th>
               </tr>
             </thead>
-
             <tbody>
               <tr>
                 <div class="student-row-box">
-                    <td>1</td>
-                    <td>5731088421</td>
-                    <td>นาย ภานุพงศ์ ทองธวัช</td>
-                    <td>3.99</td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
-                    <td>
-                      <button class="btn btn-detail">ดูข้อมูล</button>
-                      <button class="btn btn-delete">ลบ</button>
-                    </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>2</td>
+                  <td>1</td>
                   <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
-                  <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
-                  </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>3</td>
-                  <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
+                  <td>นายภานุพงศ์ ทองธวัช</td>
+                  <td>A</td>
+                  <td>9</td>
                   <td>
                     <button class="btn btn-detail">ดูข้อมูล</button>
                     <button class="btn btn-delete">ลบ</button>

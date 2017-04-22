@@ -23,8 +23,8 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="dashboard.php">ภาพรวม</a></li>
           <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
-          <li><a href="#">ข้อมูลรายวิชา</a></li>
-          <li><a href="#">ข้อมูลเจ้าหน้าที่</a></li>
+          <li><a href="course.php">ข้อมูลรายวิชา</a></li>
+          <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
           <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
         </ul>
       </div>

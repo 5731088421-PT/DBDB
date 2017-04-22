@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
-  <link rel="stylesheet" href="assets/css/student.css">
+  <link rel="stylesheet" href="assets/css/staff.css">
 </head>
 
 <body>
@@ -22,9 +22,9 @@
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="dashboard.php">ภาพรวม</a></li>
-          <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
+          <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
-          <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
+          <li class="active"><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
           <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
         </ul>
       </div>
@@ -37,19 +37,20 @@
       <div class="col-md-12">
         <div class="function-head-block">
           <div class="option-block">
-            <div class="dropdown">ปีการศึกษา
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
-                    <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">2559</a></li>
-                <li><a href="#">2558</a></li>
-                <li><a href="#">2557</a></li>
+            <div class="dropdown">ประเภท
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">อาจารย์
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                <li><a href="#">ผู้บริหาร</a></li>
+                <li><a href="#">เจ้าหน้าที่</a></li>
+                <li><a href="#">อาจารย์</a></li>
+
               </ul>
             </div>
           </div>
-          <div class="function-head-icon"><img src="assets/img/student_icon.png" alt="Student" /></div>
-          <div class="function-head-text">Student
-            <div class="function-head-subtext">ข้อมูลนิสิต</div>
+          <div class="function-head-icon"><img src="assets/img/staff_icon.png" alt="staff" /></div>
+          <div class="function-head-text">Staff
+            <div class="function-head-subtext">ข้อมูลเจ้าหน้าที่</div>
           </div>
         </div>
       </div>
@@ -65,11 +66,11 @@
             <thead>
               <tr>
                 <th style="width:70px; text-align:center;"></th>
-                <th style="width:150px;">รหัสนิสิต</th>
+                <th style="width:150px;">รหัสบุคลากร</th>
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:100px;">GPA</th>
-                <th style="width:100px;">ลาศึกษาต่อ</th>
-                <th style="width:100px;">พักการศึกษา</th>
+                <th style="width:120px;">เงินเดือน</th>
+                <th style="width:150px;">ตำแหน่ง</th>
+                <th style="width:190px;">หน่วยงานที่สังกัด</th>
                 <th style="width:145px;">การดำเนินการ</th>
               </tr>
             </thead>
@@ -80,9 +81,9 @@
                     <td>1</td>
                     <td>5731088421</td>
                     <td>นาย ภานุพงศ์ ทองธวัช</td>
-                    <td>3.99</td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
+                    <td>99,999</td>
+                    <td>คณะบดี</td>
+                    <td>คณะวิศวกรรมศาสตร์</td>
                     <td>
                       <button class="btn btn-detail">ดูข้อมูล</button>
                       <button class="btn btn-delete">ลบ</button>
@@ -94,9 +95,9 @@
                   <td>2</td>
                   <td>5731088421</td>
                   <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
+                  <td>99,999</td>
+                  <td>คณะบดี</td>
+                  <td>คณะวิศวกรรมศาสตร์</td>
                   <td>
                     <button class="btn btn-detail">ดูข้อมูล</button>
                     <button class="btn btn-delete">ลบ</button>
@@ -108,9 +109,9 @@
                   <td>3</td>
                   <td>5731088421</td>
                   <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
+                  <td>99,999</td>
+                  <td>คณะบดี</td>
+                  <td>คณะวิศวกรรมศาสตร์</td>
                   <td>
                     <button class="btn btn-detail">ดูข้อมูล</button>
                     <button class="btn btn-delete">ลบ</button>

@@ -209,3 +209,8 @@
 .data-header{
   color: gray;
 }
+
+.dropdown-toggle{
+  background-color: #18A59F;
+  border-color: transparent;
+}

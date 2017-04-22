@@ -1,27 +1,27 @@
 <?php
    include("config.php");
    session_start();
-   if(isset($_SESSION['login_user'])){
-      header("location:welcome.php");
+   if (isset($_SESSION['login_user'])) {
+       header("location:welcome.php");
    }
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form
+   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+       // username and password sent from form
 
-      $myusername = mysqli_real_escape_string($db,$_POST['username']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['password']);
+      $myusername = mysqli_real_escape_string($db, $_POST['username']);
+       $mypassword = mysqli_real_escape_string($db, $_POST['password']);
 
-      $sql = "SELECT personalID FROM users WHERE username = '$myusername' and password = '$mypassword'";
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      $count = mysqli_num_rows($result);
+       $sql = "SELECT personalID FROM users WHERE username = '$myusername' and password = '$mypassword'";
+       $result = mysqli_query($db, $sql);
+       $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+       $count = mysqli_num_rows($result);
 
       // If result matched $myusername and $mypassword, table row must be 1 row
 
-      if($count == 1) {
-         $_SESSION['login_personalID'] = $row['personalID'];
-         header("location: welcome.php");
-      }else {
-         $error = "Your Login Name or Password is invalid";
+      if ($count == 1) {
+          $_SESSION['login_personalID'] = $row['personalID'];
+          header("location: welcome.php");
+      } else {
+          $error = "Your Login Name or Password is invalid";
       }
    }
 ?>
@@ -41,12 +41,7 @@
 
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-              <div class="navbar-brand"><image src="assets/img/logo.png" alt="DBDB"></span>
-              </div>
-
-            </div>
+        <div class="container" style="margin-top:20px;">
                 <button class="btn btn-primary navbar-btn navbar-right" type="button"><strong>LOGIN</strong></button>
         </div>
     </nav>

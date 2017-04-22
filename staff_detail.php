@@ -1,3 +1,32 @@
+<?php
+include('config.php');
+include('session.php');
+// Check connection
+if ($db->connect_error) {
+   die("Connection failed: " . $db->connect_error);
+}
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+  if($_GET['id']) {
+    $query_personalID = $_GET['id'];
+  } else {
+    $query_personalID = $login_personalID;
+  }
+   $basic_info = "SELECT *,getAge(DOB) AS age FROM personnel WHERE personnel.personalID = $query_personalID";
+   $course_info = "SELECT * FROM teach T,course C WHERE teacher_personalID = $query_personalID AND C.cID = T.cID";
+   $basic_result = mysqli_query($db, $basic_info);
+   $course_result = mysqli_query($db,$course_info);
+   $row = $basic_result->fetch_assoc();
+   $query_userType = findUserType($query_personalID,$db);
+   if($query_userType  == 'teacher') {
+      $extra_info = "SELECT mName,salary,expert,faName FROM teacher T,major M,faculty F WHERE T.mID = M.mID AND F.fID = M.fID AND T.personalID = $query_personalID";
+   } else {
+      $extra_info = "SELECT * FROM staff WHERE staff.personalID = $query_personalID";
+   }
+   $extra_result = mysqli_query($db,$extra_info);
+   $extra_row = $extra_result->fetch_assoc();
+   $db->close();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,11 +50,11 @@
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="dashboard.php">ภาพรวม</a></li>
+          <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
-          <li class="active"><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
+          <li  <?php if($_GET['id']) echo "class = 'active'"; ?>><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
+          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right <?php if(!$_GET['id']) echo ' active'; ?>" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>
@@ -48,8 +77,8 @@
             </div>
           </div>
             <div class="function-head-icon"><img src="assets/img/staff_detail_icon.png" alt="Staff detail" /></div>
-          <div class="function-head-text">5731088421
-            <div class="function-head-subtext">ภานุพงศ์ ทองธวัช</div>
+          <div class="function-head-text"><?php echo $row['personalID']; ?>
+            <div class="function-head-subtext"><?php echo $row['fName']." ".$row['lName']; ?></div>
           </div>
         </div>
       </div>
@@ -68,27 +97,27 @@
               <tr>
                 <td colspan="2">
                 <span class="data-header">ที่อยู่ : </span>
-                <span class="data-detail">254 ถนน พญาไท แขวง วังใหม่ เขต ปทุมวัน กรุงเทพมหานคร 10330</span>
+                <span class="data-detail"><?php echo $row['ADDR']; ?></span>
               </td>
               </tr>
               <tr>
                 <td>
                   <span class="data-header">โทรศัพท์ : </span>
-                  <span class="data-detail">02 215 3555</span>
+                  <span class="data-detail"><?php echo $row['tel']; ?></span>
                 </td>
                 <td>
                   <span class="data-header">เพศ : </span>
-                  <span class="data-detail">ชาย</span>
+                  <span class="data-detail"><?php if($row['gender']=='M') echo "ชาย"; else echo "หญิง" ?></span>
                 </td>
               </tr>
               <tr>
                 <td>
                   <span class="data-header">อีเมล์ : </span>
-                  <span class="data-detail">Panupong.not@hotmail.com</span>
+                  <span class="data-detail"><?php echo $row['email']; ?></span>
                 </td>
                 <td>
                   <span class="data-header">อายุ : </span>
-                  <span class="data-detail">21</span>
+                  <span class="data-detail"><?php echo $row['age']; ?></span>
                 </td>
               </tr>
             </tbody>
@@ -106,26 +135,33 @@
               <tr>
                 <td>
                   <span class="data-header">เงินเดือน : </span>
-                  <span class="data-detail">99,999</span>
+                  <span class="data-detail"><?php echo $extra_row['salary']; ?></span>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <span class="data-header">คณะที่สังกัด : </span>
-                  <span class="data-detail">วิศวกรรมศาสตร์</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="data-header">ภาควิชา : </span>
-                  <span class="data-detail">คอมพิวเตอร์</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="data-header">ตำแหน่ง : </span>
-                  <span class="data-detail">คณะบดี</span>
-                </td>
+
+              <?php
+                if($query_userType=='teacher') {
+                echo '  <tr>
+                          <td>
+                            <span class="data-header">คณะที่สังกัด :</span>
+                            <span class="data-detail">' . $extra_row['faName'].'</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span class="data-header">ภาควิชา : </span>
+                            <span class="data-detail">' . $extra_row['mName'].'</span>
+                          </td>
+                        </tr>
+                        <tr>';
+              } else {
+                echo ' <td>
+                          <span class="data-header">ตำแหน่ง : </span>
+                          <span class="data-detail">'. $extra_row['position'].'</span>
+                        </td>';
+              }
+            ?>
+
               </tr>
             </tbody>
           </table>

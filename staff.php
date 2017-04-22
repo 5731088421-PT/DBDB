@@ -21,11 +21,11 @@
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="dashboard.php">ภาพรวม</a></li>
+          <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li class="active"><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
+          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>

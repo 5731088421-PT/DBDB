@@ -1,8 +1,8 @@
 <?php
    include("config.php");
    session_start();
-   if (isset($_SESSION['login_user'])) {
-       header("location:welcome.php");
+   if (isset($_SESSION['login_personalID'])) {
+       header("location:index2.php");
    }
    if ($_SERVER["REQUEST_METHOD"] == "POST") {
        // username and password sent from form
@@ -19,9 +19,9 @@
 
       if ($count == 1) {
           $_SESSION['login_personalID'] = $row['personalID'];
-          header("location: welcome.php");
+          header("location: index2.php");
       } else {
-          $error = "Your Login Name or Password is invalid";
+          $error = "<p style='color:red'> Username or Password is invalid.</p>";
       }
    }
 ?>
@@ -59,6 +59,10 @@
                     <div class="form-group">
                         <input type="password" id="password" placeholder="Password" type="text" name = "password" class="form-control" />
                     </div>
+                    <?php
+                    if($error) {
+                      echo $error;
+                    } ?>
                         <input type="submit" class="btn btn-block btn-login-submit" value="Login"/>
                 </form>
               </div>

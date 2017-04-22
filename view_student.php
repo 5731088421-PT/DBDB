@@ -1,6 +1,5 @@
 <?php
 include('config.php');
-include('converter.php');
 // Check connection
 if ($db->connect_error) {
    die("Connection failed: " . $db->connect_error);
@@ -10,6 +9,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
    $info_query = "SELECT S.*,P.*,P2.fName as advName,P2.lName as advlName,F.faName FROM student S,personnel P,personnel P2,faculty F WHERE S.personalID = P.personalID AND P2.personalID = S.advisorID AND F.fID = S.fID AND S.personalID = {$_GET['id']}";
    #enroll
    $enroll_query = "SELECT * FROM enroll E,course C WHERE E.cID = C.cID AND E.student_personalID = {$_GET['id']} and term = 1 and year = 2015";
+   #GPA
+   $gpa_query = "SELECT student_personalID,SUM(grade*credit)/SUM(credit) AS GPA FROM enroll E,course C WHERE E.cID = C.cID AND E.student_personalID = {$_GET['id']} and term = 1 and year = 2015";
+   $gpa_result = mysqli_query($db, $gpa_query);
    #award
    $award_query = "SELECT * FROM earn_award EA,award A WHERE EA.awardID = A.awardID AND EA.student_personalID = {$_GET['id']}";
    #internship
@@ -46,19 +48,11 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-   <div class="dropdown">
-     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       Dropdown button
-     </button>
-     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-       <a class="dropdown-item" href="#">Action</a>
-       <a class="dropdown-item" href="#">Another action</a>
-       <a class="dropdown-item" href="#">Something else here</a>
-     </div>
-   </div>
+
    <?php
    if ($info_result->num_rows > 0) {
       $basic_info_row = $info_result->fetch_assoc();
+         echo "XXX";
    if ($project_result->num_rows > 0) {
       $project_row = $project_result->fetch_assoc();
    }
@@ -144,6 +138,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                            echo "<td>". $row['grade']."</td>";
                            echo "</tr>";
                      }
+                     echo "<tr><td>".$gpa_result->fetch_assoc()['GPA']."</td></tr>";
                    ?>
                   </tbody>
                </table>

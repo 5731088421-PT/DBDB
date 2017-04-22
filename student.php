@@ -1,3 +1,19 @@
+<?php
+include('config.php');
+include('session.php');
+// Check connection
+if ($db->connect_error) {
+   die("Connection failed: " . $db->connect_error);
+}
+$offset = 5 * intval($_GET['pagenum']);
+
+$sql = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
+$result = mysqli_query($db, $sql);
+$list = array("sID","fName","lName","isSick","isPro","behavior");
+$sql2 = "SELECT count(*) as total FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = {$login_personalID}";
+$size = mysqli_fetch_array((mysqli_query($db,$sql2)),MYSQLI_ASSOC)["total"];
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -21,11 +37,11 @@
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="dashboard.php">ภาพรวม</a></li>
-          <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
+          <li><a href="index2.php">ภาพรวม</a></li>
+          <li  class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
+          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>

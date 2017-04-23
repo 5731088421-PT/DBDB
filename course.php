@@ -1,12 +1,13 @@
 <?php
 include('config.php');
+include('session.php');
 // Check connection
 if ($db->connect_error) {
    die("Connection failed: " . $db->connect_error);
 }
 if($_SERVER["REQUEST_METHOD"] == "GET") {
    #min, max year
-   $teach_year_query = "SELECT MIN(t.year) AS min, MAX(t.year) AS max FROM teach t WHERE t.teacher_personalID = {$_GET['id']}";
+   $teach_year_query = "SELECT MIN(t.year) AS min, MAX(t.year) AS max FROM teach t WHERE t.teacher_personalID = $login_personalID";
    $teach_year_result = mysqli_query($db, $teach_year_query);
 }
 
@@ -43,7 +44,7 @@ if ($teach_year_result->num_rows > 0) {
   </script>
 </head>
 
-<body onload = "getCourse(<?php echo $_GET['id'].','.$teach_year_row['max']; ?>, 1)">
+<body onload = "getCourse(<?php echo $login_personalID.','.$teach_year_row['max']; ?>, 1)">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -69,14 +70,21 @@ if ($teach_year_result->num_rows > 0) {
       <div class="col-md-12">
         <div class="function-head-block">
           <div class="option-block">
-            <div class="dropdown">ปีการศึกษา
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
-                    <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">2559</a></li>
-                <li><a href="#">2558</a></li>
-                <li><a href="#">2557</a></li>
-              </ul>
+            <div class="form-group">
+              <label for="year">ปีการศึกษา</label>
+              <select class="btn btn-primary" id="year" onchange="getCourse(<?php echo $login_personalID; ?>, this.value, term.value)">
+                <?php
+                  for($year = $teach_year_row['max']; $year >= $teach_year_row['min']; $year--) {
+                    echo '<option value="'.$year.'">'.($year+543).'</option>';
+                  }
+                ?>
+              </select>
+              &nbsp;&nbsp;
+              <label for="term">ภาคการศึกษา</label>
+              <select class="btn btn-primary" id="term" onchange="getCourse(<?php echo $login_personalID; ?>, year.value ,this.value)">
+                <option value="1">1</option>
+                <option value="2">2</option>
+              </select>
             </div>
           </div>
           <div class="function-head-icon"><img src="assets/img/course_icon.png" alt="Course" /></div>

@@ -1,9 +1,9 @@
 <?php
 include('config.php');
 include('session.php');
-$year = 2015;
-$term = 1;
-$cID = 2110101;
+$year = $_GET['year'];
+$term = $_GET['term'];
+$cID = $_GET['cID'];
 // Check connection
 if ($db->connect_error) {
    die("Connection failed: " . $db->connect_error);
@@ -14,6 +14,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   $course_row = $course_result ->fetch_assoc();
   $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
   $student_result = mysqli_query($db,$student_query);
+  $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
+  $basic_result = mysqli_query($db,$basic_info);
+  $basic_row = $basic_result->fetch_assoc();
   $db->close();
 }
 ?>
@@ -87,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                 <tr>
                   <td>
                     <span class="data-header">ผู้สอน : </span>
-                    <span class="data-detail">รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</span>
+                    <span class="data-detail"><?php echo $basic_row['fName']." ".$basic_row['lName']; ?></span>
                   </td>
                 </tr>
               </tbody>

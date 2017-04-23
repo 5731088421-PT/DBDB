@@ -46,7 +46,6 @@ if ($abroad_result->num_rows > 0) {
 if ($enroll_year_result->num_rows > 0) {
    $enroll_year_row = $enroll_year_result->fetch_assoc();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -106,9 +105,12 @@ if ($enroll_year_result->num_rows > 0) {
               <label for="year">ปีการศึกษา</label>
               <select class="btn btn-primary" id="year" onchange="getEnroll(<?php echo $_GET['id']; ?>, this.value, term.value)">
                 <?php
+                if($enroll_year_result->num_rows>0) {
+
                   for($year = $enroll_year_row['max']; $year >= $enroll_year_row['min']; $year--) {
                     echo '<option value="'.$year.'">'.($year+543).'</option>';
                   }
+                }
                 ?>
               </select>
               &nbsp;&nbsp;

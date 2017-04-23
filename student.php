@@ -3,15 +3,17 @@ include('config.php');
 include('session.php');
 // Check connection
 if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
+   die("Connection failed: " . $db->connect_error);
 }
 $offset = 5 * intval($_GET['pagenum']);
 
-$sql = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
-$result = mysqli_query($db, $sql);
-$list = array("sID","fName","lName","isSick","isPro","behavior");
+$basic_info = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
+
+$basic_result = mysqli_query($db, $basic_info);
 $sql2 = "SELECT count(*) as total FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = {$login_personalID}";
-$size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
+$size = mysqli_fetch_array((mysqli_query($db,$sql2)),MYSQLI_ASSOC)["total"];
+$term = 1;
+$year = 2015;
 ?>
 
 <!DOCTYPE html>
@@ -36,13 +38,12 @@ $size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
-        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
-
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
           <li  class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
+          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>
@@ -53,17 +54,17 @@ $size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
     <div class="row">
       <div class="col-md-12">
         <div class="function-head-block">
-          <div class="option-block">
+     <!--<div class="option-block">
             <div class="dropdown">ปีการศึกษา
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
                     <span class="caret"></span></button>
-              <ul class="dropdown-menu">
+             <ul class="dropdown-menu">
                 <li><a href="#">2559</a></li>
                 <li><a href="#">2558</a></li>
                 <li><a href="#">2557</a></li>
               </ul>
             </div>
-          </div>
+          </div>-->
           <div class="function-head-icon"><img src="assets/img/student_icon.png" alt="Student" /></div>
           <div class="function-head-text">Student
             <div class="function-head-subtext">ข้อมูลนิสิต</div>
@@ -84,7 +85,7 @@ $size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
                 <th style="width:70px; text-align:center;"></th>
                 <th style="width:150px;">รหัสนิสิต</th>
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:100px;">GPA</th>
+                <!--th style="width:100px;">GPA</th-->
                 <th style="width:100px;">ลาศึกษาต่อ</th>
                 <th style="width:100px;">พักการศึกษา</th>
                 <th style="width:145px;">การดำเนินการ</th>
@@ -92,48 +93,35 @@ $size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
             </thead>
 
             <tbody>
-              <tr>
-                <div class="student-row-box">
-                    <td>1</td>
-                    <td>5731088421</td>
-                    <td>นาย ภานุพงศ์ ทองธวัช</td>
-                    <td>3.99</td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
-                    <td><i class="glyphicon glyphicon-remove"></i></td>
-                    <td>
-                      <button class="btn btn-detail">ดูข้อมูล</button>
-                      <button class="btn btn-delete">ลบ</button>
-                    </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>2</td>
-                  <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
-                  <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
-                  </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>3</td>
-                  <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>3.99</td>
-                  <td><i class="glyphicon glyphicon-ok"></i></td>
-                  <td><i class="glyphicon glyphicon-remove"></i></td>
-                  <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
-                  </td>
-                </div>
-              </tr>
+              <?php
+                $i=1;
+                while($row = $basic_result->fetch_assoc()) {
+                  $abroad = "SELECT count(*) AS isAbroad FROM study_abroad A WHERE  A.student_personalID = {$row['personalID']} AND yearEnd > $year";
+                  $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
+                  $abroad_result = mysqli_query($db, $abroad);
+                  $intermission_result = mysqli_query($db,$intermission);
+                  $abroadrow =$abroad_result->fetch_assoc();
+                  $intermissionrow =$intermission_result->fetch_assoc();
+                  $isAbroad = $abroadrow['isAbroad'];
+                  $isIntermission = $intermissionrow['isIntermission'];
+                    echo "              <tr>
+                                    <div class='student-row-box'>
+                                        <td>".$i++."</td>
+                                        <td>".$row['sID']."</td>
+                                        <td>".$row['fName']." ".$row['lName']."</td>";
+                                        //<!--td>3.99</td-->
+                  if($isAbroad) echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
+                  else echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
+                  if($isIntermission) echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
+                  else echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
+                  echo                   "<td>
+                                          <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
+                                          <button class='btn btn-delete'>ลบ</button>
+                                        </td>
+                                    </div>
+                                  </tr>";
+                }
+            ?>
             </tbody>
           </table>
         </div>

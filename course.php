@@ -1,3 +1,21 @@
+<?php
+include('config.php');
+// Check connection
+if ($db->connect_error) {
+   die("Connection failed: " . $db->connect_error);
+}
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+   #min, max year
+   $teach_year_query = "SELECT MIN(t.year) AS min, MAX(t.year) AS max FROM teach t WHERE t.teacher_personalID = {$_GET['id']}";
+   $teach_year_result = mysqli_query($db, $teach_year_query);
+}
+
+if ($teach_year_result->num_rows > 0) {
+   $teach_year_row = $teach_year_result->fetch_assoc();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -9,9 +27,23 @@
   <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
   <link rel="stylesheet" href="assets/css/course.css">
+  <script>
+  function getCourse(id, year, term) {
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    }
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("courseInfo").innerHTML = this.responseText;
+          }
+      };
+    xmlhttp.open("GET","getCourse.php?id="+id+"&year="+year+"&term="+term,true);
+    xmlhttp.send();
+  }
+  </script>
 </head>
 
-<body>
+<body onload = "getCourse(<?php echo $_GET['id'].','.$teach_year_row['max']; ?>, 1)">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -60,37 +92,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-12">
-          <table style="width:100%;" class="student-table">
-
-            <thead>
-              <tr>
-                <th style="width:70px; text-align:center;"></th>
-                <th style="width:100px;">รหัสวิชา</th>
-                <th style="min-width:100px;">ชื่อวิชา</th>
-                <th style="width:90px;">ตอนเรียน</th>
-                <th style="width:100px;">ประเภท</th>
-                <th style="width:90px;">จำนวนนิสิต</th>
-                <th style="width:260px;">การดำเนินการ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <div class="student-row-box">
-                    <td>1</td>
-                    <td>2110318</td>
-                    <td>DIS SYS ESSEN</td>
-                    <td>1</td>
-                    <td>APPROVE</td>
-                    <td>30</td>
-                    <td>
-                      <button class="btn btn-detail">ดูข้อมูล</button>
-                      <button class="btn btn-detail">เพิ่มตอนเรียน</button>
-                      <button class="btn btn-delete">ลบ</button>
-                    </td>
-                </div>
-              </tr>
-            </tbody>
-          </table>
+          <div id="courseInfo"></div>
         </div>
       </div>
     </div>

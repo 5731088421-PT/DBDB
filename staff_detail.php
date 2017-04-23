@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     <div class="row">
       <div class="col-md-12">
         <div class="function-head-block">
-          <div class="option-block">
+          <!--div class="option-block">
             <div class="dropdown">ปีการศึกษา
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
                     <span class="caret"></span></button>
@@ -75,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                 <li><a href="#">2557</a></li>
               </ul>
             </div>
-          </div>
+          </div-->
             <div class="function-head-icon"><img src="assets/img/staff_detail_icon.png" alt="Staff detail" /></div>
           <div class="function-head-text"><?php echo $row['personalID']; ?>
             <div class="function-head-subtext"><?php echo $row['fName']." ".$row['lName']; ?></div>

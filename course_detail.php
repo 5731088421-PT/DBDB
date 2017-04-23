@@ -1,3 +1,22 @@
+<?php
+include('config.php');
+include('session.php');
+$year = 2015;
+$term = 1;
+$cID = 2110101;
+// Check connection
+if ($db->connect_error) {
+   die("Connection failed: " . $db->connect_error);
+}
+if($_SERVER["REQUEST_METHOD"] == "GET") {
+  $course_query = "SELECT Te.cID,cName,credit,enroll_q,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID AND S.term = $term AND S.year =$year AND C.cID =$cID";
+  $course_result = mysqli_query($db,$course_query);
+  $course_row = $course_result ->fetch_assoc();
+  $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
+  $student_result = mysqli_query($db,$student_query);
+  $db->close();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,11 +40,11 @@
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="dashboard.php">ภาพรวม</a></li>
+          <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li class="active"><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <button class="btn btn-primary navbar-btn navbar-right" type="button"><span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button>
+          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>
@@ -35,7 +54,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="function-head-block">
+        <!--div class="function-head-block">
           <div class="option-block">
             <div class="dropdown">ปีการศึกษา
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
@@ -46,10 +65,10 @@
                 <li><a href="#">2557</a></li>
               </ul>
             </div>
-          </div>
+          </div-->
             <div class="function-head-icon"><img src="assets/img/course_detail_icon.png" alt="Course detail" /></div>
-          <div class="function-head-text">2110422
-            <div class="function-head-subtext">DB MGT SYS DESIGN</div>
+          <div class="function-head-text"><?php echo $course_row['cID']; ?>
+            <div class="function-head-subtext"><?php echo $course_row['cName']; ?></div>
           </div>
         </div>
       </div>
@@ -85,14 +104,20 @@
             <tbody>
               <tr>
                 <td>
-                  <span class="data-header">จำนวนที่เปิดรับ : </span>
-                  <span class="data-detail">99</span>
+                  <span class="data-header">จำนวนที่ลงทะเบียน : </span>
+                  <span class="data-detail"><?php echo $course_row['enroll_q']; ?></span>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <span class="data-header">จำนวนตอนเรียน : </span>
-                  <span class="data-detail">3</span>
+                  <span class="data-header">จำนวนที่เปิดรับ : </span>
+                  <span class="data-detail"><?php echo $course_row['accept_q']; ?></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="data-header">ตอนเรียน : </span>
+                  <span class="data-detail"><?php echo $course_row['secNo']; ?></span>
                 </td>
               </tr>
             </tbody>
@@ -119,19 +144,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <div class="student-row-box">
-                  <td>1</td>
-                  <td>5731088421</td>
-                  <td>นายภานุพงศ์ ทองธวัช</td>
-                  <td>A</td>
-                  <td>9</td>
+              <?php
+              $i=1;
+                while($row= $student_result->fetch_assoc()) {
+                  echo "
+                  <tr>
+                  <div class='student-row-box'>
+                  <td>".$i++."</td>
+                  <td>".$row['sID']."</td>
+                  <td>".$row['fName']." ". $row['lName']."</td>
+                  <td>".$row['grade']."</td>
+                  <td>".$row['attendance']."</td>
                   <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
+                  <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
+                  <button class='btn btn-delete'>ลบ</button>
                   </td>
-                </div>
-              </tr>
+                  </div>
+                  </tr>";
+                }
+              ?>
             </tbody>
           </table>
         </div>

@@ -23,7 +23,10 @@
        $gpa_query = "SELECT S.personalID,calGPA(S.personalID,{$_GET['term']},{$_GET['year']}) as GPA FROM student S WHERE S.personalID = {$_GET['id']}";
        $enroll_result = mysqli_query($db, $enroll_query);
        $gpa_result = mysqli_query($db,$gpa_query);
-       $gpa = $gpa_result->fetch_assoc();
+       if($gpa_result->num_rows>0){
+
+         $gpa = $gpa_result->fetch_assoc();
+       }
     }
     ?>
        <table class="course-table">
@@ -38,15 +41,17 @@
          </thead>
          <tbody>
        <?php
-          while($row = $enroll_result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>". $row['cID']."</td>";
-                echo "<td>". $row['cName']."</td>";
-                echo "<td>". $row['credit']."</td>";
-                echo "<td>". $row['secNo']."</td>";
-                echo "<td>". $row['grade']."</td>";
-                echo "</tr>";
-          }
+       if($enroll_result->num_rows>0){
+         while($row = $enroll_result->fetch_assoc()) {
+           echo "<tr>";
+           echo "<td>". $row['cID']."</td>";
+           echo "<td>". $row['cName']."</td>";
+           echo "<td>". $row['credit']."</td>";
+           echo "<td>". $row['secNo']."</td>";
+           echo "<td>". $row['grade']."</td>";
+           echo "</tr>";
+         }
+       }
         ?>
        </tbody>
      </table>

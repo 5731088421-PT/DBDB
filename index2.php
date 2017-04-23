@@ -3,16 +3,16 @@ include('config.php');
 include('session.php');
 // Check connection
 if ($db->connect_error) {
-   die("Connection failed: " . $db->connect_error);
+    die("Connection failed: " . $db->connect_error);
 }
-if($_SERVER["REQUEST_METHOD"] == "GET") {
-   #students
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    #students
    $student_query = "SELECT * FROM student LEFT JOIN earn_award ON student.personalID=earn_award.student_personalID";
-   $student_result = mysqli_query($db, $student_query);
+    $student_result = mysqli_query($db, $student_query);
    #semesterYear
    $semester_year_query = "SELECT MIN(s.year) AS min, MAX(s.year) AS max FROM semester s";
-   $semester_year_result = mysqli_query($db, $semester_year_query);
-   $semester_year_row = $semester_year_result->fetch_assoc();
+    $semester_year_result = mysqli_query($db, $semester_year_query);
+    $semester_year_row = $semester_year_result->fetch_assoc();
 }
 
 ?>
@@ -45,21 +45,27 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
   </script>
 </head>
 
-<body onload='getOverview(<?php echo substr($semester_year_row['max']+543,2); ?>)'>
+<body onload='getOverview(<?php echo substr($semester_year_row['max']+543, 2); ?>)'>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand">
           <image src="assets/img/logo.png" alt="DBDB">
         </a>
+        <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
+        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>
@@ -74,23 +80,23 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
     <div class="row">
       <div class="col-md-12">
         <div class="function-head-block">
-
-          <div class="function-head-icon"><img src="assets/img/overview_icon.png" alt="Overview" /></div>
-          <div class="function-head-text">Overview
-            <div class="function-head-subtext">ภาพรวม คณะวิศวกรรมศาสตร์</div>
-          </div>
           <div class="option-block">
             <div class="form-group">
               <label for="semesterYear">ปีการศึกษา</label>
               <select class="btn btn-primary" id="semesterYear" onchange="getOverview(this.value)">
                 <?php
-                  for($year = $semester_year_row['max']; $year >= $semester_year_row['min']; $year--) {
-                    echo '<option value="'.substr($year+543,2).'">'.($year+543).'</option>';
+                  for ($year = $semester_year_row['max']; $year >= $semester_year_row['min']; $year--) {
+                      echo '<option value="'.substr($year+543, 2).'">'.($year+543).'</option>';
                   }
                 ?>
               </select>
             </div>
           </div>
+          <div class="function-head-icon"><img src="assets/img/overview_icon.png" alt="Overview" /></div>
+          <div class="function-head-text">Overview
+            <div class="function-head-subtext">ภาพรวม คณะวิศวกรรมศาสตร์</div>
+          </div>
+
         </div>
       </div>
     </div>

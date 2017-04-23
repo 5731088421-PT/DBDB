@@ -3,28 +3,28 @@ include('config.php');
 include('session.php');
 // Check connection
 if ($db->connect_error) {
-   die("Connection failed: " . $db->connect_error);
+    die("Connection failed: " . $db->connect_error);
 }
-if($_SERVER["REQUEST_METHOD"] == "GET") {
-  if($_GET['id']) {
-    $query_personalID = $_GET['id'];
-  } else {
-    $query_personalID = $login_personalID;
-  }
-   $basic_info = "SELECT *,getAge(DOB) AS age FROM personnel WHERE personnel.personalID = $query_personalID";
-   $course_info = "SELECT * FROM teach T,course C WHERE teacher_personalID = $query_personalID AND C.cID = T.cID";
-   $basic_result = mysqli_query($db, $basic_info);
-   $course_result = mysqli_query($db,$course_info);
-   $row = $basic_result->fetch_assoc();
-   $query_userType = findUserType($query_personalID,$db);
-   if($query_userType  == 'teacher') {
-      $extra_info = "SELECT mName,salary,expert,faName FROM teacher T,major M,faculty F WHERE T.mID = M.mID AND F.fID = M.fID AND T.personalID = $query_personalID";
-   } else {
-      $extra_info = "SELECT * FROM staff WHERE staff.personalID = $query_personalID";
-   }
-   $extra_result = mysqli_query($db,$extra_info);
-   $extra_row = $extra_result->fetch_assoc();
-   $db->close();
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if ($_GET['id']) {
+        $query_personalID = $_GET['id'];
+    } else {
+        $query_personalID = $login_personalID;
+    }
+    $basic_info = "SELECT *,getAge(DOB) AS age FROM personnel WHERE personnel.personalID = $query_personalID";
+    $course_info = "SELECT * FROM teach T,course C WHERE teacher_personalID = $query_personalID AND C.cID = T.cID";
+    $basic_result = mysqli_query($db, $basic_info);
+    $course_result = mysqli_query($db, $course_info);
+    $row = $basic_result->fetch_assoc();
+    $query_userType = findUserType($query_personalID, $db);
+    if ($query_userType  == 'teacher') {
+        $extra_info = "SELECT mName,salary,expert,faName FROM teacher T,major M,faculty F WHERE T.mID = M.mID AND F.fID = M.fID AND T.personalID = $query_personalID";
+    } else {
+        $extra_info = "SELECT * FROM staff WHERE staff.personalID = $query_personalID";
+    }
+    $extra_result = mysqli_query($db, $extra_info);
+    $extra_row = $extra_result->fetch_assoc();
+    $db->close();
 }
 ?>
 <!DOCTYPE html>
@@ -49,12 +49,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
+        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right <?php if (!$_GET['id']) {
+    echo ' active';
+} ?>" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
-          <li  <?php if($_GET['id']) echo "class = 'active'"; ?>><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right <?php if(!$_GET['id']) echo ' active'; ?>" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
+          <li  <?php if ($_GET['id']) {
+    echo "class = 'active'";
+} ?>><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
         </ul>
       </div>
     </div>
@@ -107,7 +111,11 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                 </td>
                 <td>
                   <span class="data-header">เพศ : </span>
-                  <span class="data-detail"><?php if($row['gender']=='M') echo "ชาย"; else echo "หญิง" ?></span>
+                  <span class="data-detail"><?php if ($row['gender']=='M') {
+    echo "ชาย";
+} else {
+    echo "หญิง";
+} ?></span>
                 </td>
               </tr>
               <tr>
@@ -140,8 +148,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
               </tr>
 
               <?php
-                if($query_userType=='teacher') {
-                echo '  <tr>
+                if ($query_userType=='teacher') {
+                    echo '  <tr>
                           <td>
                             <span class="data-header">คณะที่สังกัด :</span>
                             <span class="data-detail">' . $extra_row['faName'].'</span>
@@ -154,12 +162,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
                           </td>
                         </tr>
                         <tr>';
-              } else {
-                echo ' <td>
+                } else {
+                    echo ' <td>
                           <span class="data-header">ตำแหน่ง : </span>
                           <span class="data-detail">'. $extra_row['position'].'</span>
                         </td>';
-              }
+                }
             ?>
 
               </tr>

@@ -168,36 +168,41 @@ if($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
       </div>
     </div>
+    <?php
+    if($query_userType=='teacher') {
+        echo '    <div class="row">
+              <div class="col-md-8">
+              <div class="col-md-12 data-box">
+                <div class="data-box-header">
+                  วิชาทีสอน
+                </div>
+                  <table class="course-table">
+                    <thead>
+                      <th>รหัสวิชา</th>
+                      <th>ชื่อวิชา</th>
+                      <th>ตอนเรียน</th>
+                    </thead>
+                    <tbody>';
+            echo '    <tr>
+                        <td>
+                          2110318
+                        </td>
+                        <td>
+                          DIS SYS ESSEN
+                        </td>
+                        <td>
+                          33
+                        </td>
+                      </tr>';
 
-    <div class="row">
-      <div class="col-md-8">
-      <div class="col-md-12 data-box">
-        <div class="data-box-header">
-          วิชาทีสอน
-        </div>
-          <table class="course-table">
-            <thead>
-              <th>รหัสวิชา</th>
-              <th>ชื่อวิชา</th>
-              <th>ตอนเรียน</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  2110318
-                </td>
-                <td>
-                  DIS SYS ESSEN
-                </td>
-                <td>
-                  33
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
+            echo   '</tbody>
+                  </table>
+              </div>
+            </div>
+          </div>';
+    }
+     ?>
+
   </div>
 
   <footer class="site-footer">

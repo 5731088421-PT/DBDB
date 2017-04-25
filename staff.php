@@ -9,9 +9,23 @@
   <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
   <link rel="stylesheet" href="assets/css/staff.css">
+  <script>
+  function getStaff(type) {
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    }
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("staffInfo").innerHTML = this.responseText;
+          }
+      };
+    xmlhttp.open("GET","getStaff.php?type="+type,true);
+    xmlhttp.send();
+  }
+  </script>
 </head>
 
-<body>
+<body onload="getStaff('executive')">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -37,15 +51,13 @@
       <div class="col-md-12">
         <div class="function-head-block">
           <div class="option-block">
-            <div class="dropdown">ประเภท
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">อาจารย์
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                <li><a href="#">ผู้บริหาร</a></li>
-                <li><a href="#">เจ้าหน้าที่</a></li>
-                <li><a href="#">อาจารย์</a></li>
-
-              </ul>
+            <div class="form-group">
+              <label for="year">ประเภท</label>
+              <select class="btn btn-primary" onchange="getStaff(this.value)">
+                <option value="executive">ผู้บริหาร</option>
+                <option value="staff">เจ้าหน้าที่</option>
+                <option value="teacher">อาจารย์</option>
+              </select>
             </div>
           </div>
           <div class="function-head-icon"><img src="assets/img/staff_icon.png" alt="staff" /></div>
@@ -61,65 +73,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-12">
-          <table style="width:100%;" class="student-table">
-
-            <thead>
-              <tr>
-                <th style="width:70px; text-align:center;"></th>
-                <th style="width:150px;">รหัสบุคลากร</th>
-                <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:120px;">เงินเดือน</th>
-                <th style="width:150px;">ตำแหน่ง</th>
-                <th style="width:190px;">หน่วยงานที่สังกัด</th>
-                <th style="width:145px;">การดำเนินการ</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <div class="student-row-box">
-                    <td>1</td>
-                    <td>5731088421</td>
-                    <td>นาย ภานุพงศ์ ทองธวัช</td>
-                    <td>99,999</td>
-                    <td>คณะบดี</td>
-                    <td>คณะวิศวกรรมศาสตร์</td>
-                    <td>
-                      <button class="btn btn-detail">ดูข้อมูล</button>
-                      <button class="btn btn-delete">ลบ</button>
-                    </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>2</td>
-                  <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>99,999</td>
-                  <td>คณะบดี</td>
-                  <td>คณะวิศวกรรมศาสตร์</td>
-                  <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
-                  </td>
-                </div>
-              </tr>
-              <tr>
-                <div class="student-row-box">
-                  <td>3</td>
-                  <td>5731088421</td>
-                  <td>นาย ภานุพงศ์ ทองธวัช</td>
-                  <td>99,999</td>
-                  <td>คณะบดี</td>
-                  <td>คณะวิศวกรรมศาสตร์</td>
-                  <td>
-                    <button class="btn btn-detail">ดูข้อมูล</button>
-                    <button class="btn btn-delete">ลบ</button>
-                  </td>
-                </div>
-              </tr>
-            </tbody>
-          </table>
+          <div id="staffInfo"></div>
         </div>
       </div>
     </div>

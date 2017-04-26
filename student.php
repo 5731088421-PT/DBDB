@@ -3,15 +3,18 @@ include('config.php');
 include('session.php');
 // Check connection
 if ($db->connect_error) {
-   die("Connection failed: " . $db->connect_error);
+    die("Connection failed: " . $db->connect_error);
 }
-$offset = 5 * intval($_GET['pagenum']);
+if(!$_GET['pagenum']) {
+  $pagenum = 0;
+}
+$offset = 5 * intval($pagenum);
 
 $basic_info = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
 
 $basic_result = mysqli_query($db, $basic_info);
 $sql2 = "SELECT count(*) as total FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = {$login_personalID}";
-$size = mysqli_fetch_array((mysqli_query($db,$sql2)),MYSQLI_ASSOC)["total"];
+$size = mysqli_fetch_array((mysqli_query($db, $sql2)), MYSQLI_ASSOC)["total"];
 $term = 1;
 $year = 2015;
 ?>
@@ -38,12 +41,12 @@ $year = 2015;
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
+        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
-          <li  class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
+          <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
           <li><a href="course.php">ข้อมูลรายวิชา</a></li>
           <li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
-          <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
         </ul>
       </div>
     </div>
@@ -95,26 +98,40 @@ $year = 2015;
             <tbody>
               <?php
                 $i=1;
-                while($row = $basic_result->fetch_assoc()) {
-                  $abroad = "SELECT count(*) AS isAbroad FROM study_abroad A WHERE  A.student_personalID = {$row['personalID']} AND yearEnd > $year";
-                  $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
-                  $abroad_result = mysqli_query($db, $abroad);
-                  $intermission_result = mysqli_query($db,$intermission);
-                  $abroadrow =$abroad_result->fetch_assoc();
-                  $intermissionrow =$intermission_result->fetch_assoc();
-                  $isAbroad = $abroadrow['isAbroad'];
-                  $isIntermission = $intermissionrow['isIntermission'];
+                while ($row = $basic_result->fetch_assoc()) {
+                    $abroad = "SELECT count(*) AS isAbroad FROM study_abroad A WHERE  A.student_personalID = {$row['personalID']} AND yearEnd > $year";
+                    $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
+                    $abroad_result = mysqli_query($db, $abroad);
+                    $intermission_result = mysqli_query($db, $intermission);
+                    if($abroad_result->num_rows>0){
+                      $abroadrow =$abroad_result->fetch_assoc();
+                      $isAbroad = $abroadrow['isAbroad'];
+                    } else {
+                      $isAbroad = 0;
+                    }
+                    if($intermission_result->num_rows>0){
+                      $intermissionrow =$intermission_result->fetch_assoc();
+                      $isIntermission = $intermissionrow['isIntermission'];
+                    } else {
+                      $isIntermission =0;
+                    }
                     echo "              <tr>
                                     <div class='student-row-box'>
                                         <td>".$i++."</td>
                                         <td>".$row['sID']."</td>
                                         <td>".$row['fName']." ".$row['lName']."</td>";
                                         //<!--td>3.99</td-->
-                  if($isAbroad) echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
-                  else echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
-                  if($isIntermission) echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
-                  else echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
-                  echo                   "<td>
+                  if ($isAbroad) {
+                      echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
+                  } else {
+                      echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
+                  }
+                    if ($isIntermission) {
+                        echo "<td><i class='glyphicon glyphicon-ok'></i></td>";
+                    } else {
+                        echo "<td><i class='glyphicon glyphicon-remove'></i></td>";
+                    }
+                    echo                   "<td>
                                           <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
                                           <button class='btn btn-delete'>ลบ</button>
                                         </td>

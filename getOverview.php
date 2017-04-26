@@ -44,9 +44,9 @@
       foreach($overview as $year => $info) {
         echo '<div class="col-md-3">
           <div class="col-md-12 data-box">
-            <button class="btn info-btn">
+            <!--button class="btn info-btn">
               ดูเพิ่มเติม
-            </button>
+            </button-->
             <div class="data-box-header">
               ชั้นปีที่ '.$year.'
             </div>

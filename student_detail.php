@@ -288,77 +288,84 @@ if ($enroll_year_result->num_rows > 0) {
 </div>
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="col-md-12 data-box">
-      <div class="data-box-header">
-        การฝึกงาน
+  <?php
+  if($internship_row) {
+    echo "  <div class='col-md-6'>
+        <div class='col-md-12 data-box'>
+          <div class='data-box-header'>
+            การฝึกงาน
+          </div>
+            <table style='width:100%;' class='dashboard-table'>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class='data-header'>หน่วยงาน : </span>
+                    <span class='data-detail'>{$internship_row['company']}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class='data-header'>ตำแหน่ง : </span>
+                    <span class='data-detail'>{$internship_row['position']}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class='data-header'>วันที่เริ่มต้น : </span>
+                    <span class='data-detail'>{$internship_row['startDate']}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class='data-header'>วันที่สิ้นสุด : </span>
+                    <span class='data-detail'>{$internship_row['endDate']}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>";
+  }
+  if($abroad_row) {
+    echo "<div class='col-md-6'>
+      <div class='col-md-12 data-box'>
+        <div class='data-box-header'>
+          ลาศึกษาต่อต่างประเทศ
+        </div>
+          <table style='width:100%;' class='dashboard-table'>
+            <tbody>
+              <tr>
+                <td>
+                  <span class='data-header'>ชื่อสถานศึกษา : </span>
+                  <span class='data-detail'>{$abroad_row['university']}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class='data-header'>ประเทศ : </span>
+                  <span class='data-detail'>{$abroad_row['country']}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class='data-header'>คณะที่สังกัด : </span>
+                  <span class='data-detail'>{$abroad_row['faculty']}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class='data-header'>ปีที่ศึกษาจบ : </span>
+                  <span class='data-detail'>".($abroad_row['yearEnd']+543)."</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-        <table style="width:100%;" class="dashboard-table">
-          <tbody>
-            <tr>
-              <td>
-                <span class="data-header">หน่วยงาน : </span>
-                <span class="data-detail"><?php echo $internship_row['company']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">ตำแหน่ง : </span>
-                <span class="data-detail"><?php echo $internship_row['position']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">วันที่เริ่มต้น : </span>
-                <span class="data-detail"><?php echo $internship_row['startDate']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">วันที่สิ้นสุด : </span>
-                <span class="data-detail"><?php echo $internship_row['endDate']; ?></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="col-md-12 data-box">
-      <div class="data-box-header">
-        ลาศึกษาต่อต่างประเทศ
-      </div>
-        <table style="width:100%;" class="dashboard-table">
-          <tbody>
-            <tr>
-              <td>
-                <span class="data-header">ชื่อสถานศึกษา : </span>
-                <span class="data-detail"><?php echo $abroad_row['university']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">ประเทศ : </span>
-                <span class="data-detail"><?php echo $abroad_row['country']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">คณะที่สังกัด : </span>
-                <span class="data-detail"><?php echo $abroad_row['faculty']; ?></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <span class="data-header">ปีที่ศึกษาจบ : </span>
-                <span class="data-detail"><?php echo $abroad_row['yearEnd']+543; ?></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
-  </div>
-</div>
+    </div>";
+  }
+  ?>
+
 
   </div>
 

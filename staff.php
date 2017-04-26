@@ -25,7 +25,7 @@
   </script>
 </head>
 
-<body onload="getStaff('executive')">
+<body onload="getStaff('staff')">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -54,7 +54,7 @@
             <div class="form-group">
               <label for="year">ประเภท</label>
               <select class="btn btn-primary" onchange="getStaff(this.value)">
-                <option value="executive">ผู้บริหาร</option>
+                <!--option value="executive">ผู้บริหาร</option-->
                 <option value="staff">เจ้าหน้าที่</option>
                 <option value="teacher">อาจารย์</option>
               </select>

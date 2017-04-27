@@ -133,7 +133,7 @@ $year = 2015;
                     }
                     echo                   "<td>
                                           <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                                          <button class='btn btn-delete'>ลบ</button>
+                                          <a href='delete_student.php?id=".$row['personalID']."' ><button class='btn btn-delete' type=submit>ลบ</button></a>
                                         </td>
                                     </div>
                                   </tr>";

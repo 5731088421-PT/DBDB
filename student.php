@@ -5,7 +5,10 @@ include('session.php');
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
-$offset = 5 * intval($_GET['pagenum']);
+if(!$_GET['pagenum']) {
+  $pagenum = 0;
+}
+$offset = 5 * intval($pagenum);
 
 $basic_info = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
 
@@ -100,10 +103,18 @@ $year = 2015;
                     $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
                     $abroad_result = mysqli_query($db, $abroad);
                     $intermission_result = mysqli_query($db, $intermission);
-                    $abroadrow =$abroad_result->fetch_assoc();
-                    $intermissionrow =$intermission_result->fetch_assoc();
-                    $isAbroad = $abroadrow['isAbroad'];
-                    $isIntermission = $intermissionrow['isIntermission'];
+                    if($abroad_result->num_rows>0){
+                      $abroadrow =$abroad_result->fetch_assoc();
+                      $isAbroad = $abroadrow['isAbroad'];
+                    } else {
+                      $isAbroad = 0;
+                    }
+                    if($intermission_result->num_rows>0){
+                      $intermissionrow =$intermission_result->fetch_assoc();
+                      $isIntermission = $intermissionrow['isIntermission'];
+                    } else {
+                      $isIntermission =0;
+                    }
                     echo "              <tr>
                                     <div class='student-row-box'>
                                         <td>".$i++."</td>
@@ -122,7 +133,7 @@ $year = 2015;
                     }
                     echo                   "<td>
                                           <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                                          <button class='btn btn-delete'>ลบ</button>
+                                          <a href='delete_student.php?id=".$row['personalID']."' ><button class='btn btn-delete' type=submit>ลบ</button></a>
                                         </td>
                                     </div>
                                   </tr>";

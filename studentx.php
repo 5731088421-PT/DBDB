@@ -100,10 +100,14 @@ $year = 2015;
                     $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
                     $abroad_result = mysqli_query($db, $abroad);
                     $intermission_result = mysqli_query($db, $intermission);
-                    $abroadrow =$abroad_result->fetch_assoc();
-                    $intermissionrow =$intermission_result->fetch_assoc();
-                    $isAbroad = $abroadrow['isAbroad'];
-                    $isIntermission = $intermissionrow['isIntermission'];
+                    if($abroad_result->num_rows>0){
+                      $abroadrow =$abroad_result->fetch_assoc();
+                      $isAbroad = $abroadrow['isAbroad'];
+                    }
+                    if($intermission_result->num_rows>0){
+                      $intermissionrow =$intermission_result->fetch_assoc();
+                      $isIntermission = $intermissionrow['isIntermission'];
+                    }
                     echo "              <tr>
                                     <div class='student-row-box'>
                                         <td>".$i++."</td>

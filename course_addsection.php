@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
-  <link rel="stylesheet" href="assets/css/course_detail.css">
+  <link rel="stylesheet" href="assets/css/course_addsection.css">
 </head>
 
 <body>
@@ -77,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       </div>
     </div>
   </div>
+  <form class="" action="index.html" method="post">
 
   <div class="container">
     <div class="row">
@@ -90,7 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <tr>
                   <td>
                     <span class="data-header">ผู้สอน : </span>
-                    <span class="data-detail"><?php echo $basic_row['fName']." ".$basic_row['lName']; ?></span>
+                    <select class="form-control" id="exampleSelect1">
+                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
+                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
+                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
+                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
+                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
+                      </select>
                   </td>
                 </tr>
               </tbody>
@@ -103,75 +110,38 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
           <div class="data-box-header">
             สถานะ
           </div>
-          <table style="width:100%;" class="dashboard-table">
+          <table style="width:95%;" class="dashboard-table">
             <tbody>
               <tr>
                 <td>
-                  <span class="data-header">จำนวนที่ลงทะเบียน : </span>
-                  <span class="data-detail"><?php echo $course_row['enroll_q']; ?></span>
+                  <span class="data-header">ภาคการศึกษา : 2559/2</span>
                 </td>
               </tr>
               <tr>
                 <td>
                   <span class="data-header">จำนวนที่เปิดรับ : </span>
-                  <span class="data-detail"><?php echo $course_row['accept_q']; ?></span>
+                  <input type="seat" class="form-control" id="seat" placeholder="จำนวนนิสิต">
                 </td>
               </tr>
               <tr>
                 <td>
                   <span class="data-header">ตอนเรียน : </span>
-                  <span class="data-detail"><?php echo $course_row['secNo']; ?></span>
+                  <input type="section" class="form-control" placeholder="ตอนเรียน">
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="col-md-12 data-box-tableinside">
-          <div class="data-box-header">
-            นิสิตที่ลงทะเบียน
-          </div>
-          <table  class="student-table">
-            <thead>
               <tr>
-                <th style="width:70px; text-align:center;"></th>
-                <th style="width:140px;">เลขประจำตัวนิสิต</th>
-                <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:120px;">ผลการศึกษา</th>
-                <th style="width:120px;">การเข้าเรียน</th>
-                <th style="width:145px;">การดำเนินการ</th>
+                <td>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </td>  
               </tr>
-            </thead>
-            <tbody>
-              <?php
-              $i=1;
-                while ($row= $student_result->fetch_assoc()) {
-                    echo "
-                  <tr>
-                  <div class='student-row-box'>
-                  <td>".$i++."</td>
-                  <td>".$row['sID']."</td>
-                  <td>".$row['fName']." ". $row['lName']."</td>
-                  <td>".$row['grade']."</td>
-                  <td>".$row['attendance']."</td>
-                  <td>
-                  <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                  <button class='btn btn-delete'>ลบ</button>
-                  </td>
-                  </div>
-                  </tr>";
-                }
-              ?>
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
+</form>
+
 
   <footer class="site-footer">
     <div class="container">

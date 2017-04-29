@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $query_personalID = $login_personalID;
     }
     $basic_info = "SELECT *,getAge(DOB) AS age FROM personnel WHERE personnel.personalID = $query_personalID";
-    $course_info = "SELECT * FROM teach T,course C WHERE teacher_personalID = $query_personalID AND C.cID = T.cID";
+    //$course_info = "SELECT * FROM teach T,course C WHERE teacher_personalID = $query_personalID AND C.cID = T.cID";
+    $course_info = "SELECT * FROM teach t, course c WHERE t.teacher_personalID = $query_personalID AND c.cID = t.cID AND t.year = (SELECT MAX(teach.year) FROM teach) AND t.term = (SELECT MAX(teach.term) FROM teach WHERE teach.year = (SELECT MAX(teach.year) FROM teach))";
     $basic_result = mysqli_query($db, $basic_info);
     $course_result = mysqli_query($db, $course_info);
     $row = $basic_result->fetch_assoc();
@@ -182,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               <div class="col-md-8">
               <div class="col-md-12 data-box">
                 <div class="data-box-header">
-                  วิชาทีสอน
+                  วิชาที่สอน
                 </div>
                   <table class="course-table">
                     <thead>
@@ -191,17 +192,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                       <th>ตอนเรียน</th>
                     </thead>
                     <tbody>';
-            echo '    <tr>
-                        <td>
-                          2110318
-                        </td>
-                        <td>
-                          DIS SYS ESSEN
-                        </td>
-                        <td>
-                          33
-                        </td>
-                      </tr>';
+
+            if($course_result->num_rows > 0) {
+              while($row = $course_result->fetch_assoc()) {
+                echo '    <tr>
+                            <td>
+                              '.$row['cID'].'
+                            </td>
+                            <td>
+                              '.$row['cName'].'
+                            </td>
+                            <td>
+                              '.$row['secNo'].'
+                            </td>
+                          </tr>';
+              }
+            }
 
             echo   '</tbody>
                   </table>

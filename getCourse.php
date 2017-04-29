@@ -51,8 +51,8 @@
             <td>".$row['totalStudent']."</td>
             <td>
             <a href='course_detail.php?cID=".$row['cID']."&term=".$row['term']."&year=".$row['year']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-            <button class='btn btn-detail'>เพิ่มตอนเรียน</button>
-            <button class='btn btn-delete'>ลบ</button>
+            <a href='course_addsection.php?cID=".$row['cID']."&term=".$row['term']."&year=".$row['year']."' ><button class='btn btn-detail'>เพิ่มตอนเรียน</button></a>
+            <a href='course_delete.php?cID=".$row['cID']."&term=".$row['term']."&year=".$row['year']."&secNo=".$row['secNo']."' ><button class='btn btn-delete'>ลบ</button></a>
             </td></div></tr>";
           }
 

@@ -100,6 +100,12 @@ if ($db->connect_error) {
                     <span class="data-detail"><input type="text" class="form-control" name="credit" placeholder="หน่วยกิต (1 หรือ 3)"></span>
                   </td>
                 </tr>
+                <tr>
+                  <td>
+                    <span class="data-header">เวลาเรียน : </span>
+                    <span class="data-detail"><input type="text" class="form-control" name="time" placeholder="ตัวอย่าง 9.30-12.00"></span>
+                  </td>
+                </tr>
               </tbody>
             </table>
 

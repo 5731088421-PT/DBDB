@@ -163,8 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                   <td>".$i++."</td>
                   <td>".$row['sID']."</td>
                   <td>".$row['fName']." ". $row['lName']."</td>
-                  <td>"<input type="grade" class="form-control" id="grade" placeholder=".$row['grade'].">"</td>
-                  <td>"<input type="grade" class="form-control" id="grade" placeholder=".$row['attendance'].">"</td>
+                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['grade'].">.</td>
+                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['attendance']."></td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
                     <a href='enroll_delete.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-delete'>ลบ</button></a>

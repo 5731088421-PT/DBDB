@@ -72,7 +72,7 @@ if ($db->connect_error) {
         </div>
       </div>
 
- <form class="" action="index.html" method="post">
+ <form class="" action="addCourse.php" method="post">
   <div class="container">
     <div class="row">
       <div class="col-md-8">
@@ -85,19 +85,19 @@ if ($db->connect_error) {
                 <tr>
                   <td>
                     <span class="data-header">รหัสวิชา : </span>
-                    <span class="data-detail"><input type="courseid" class="form-control" id="Id" placeholder="รหัสวิชา"></span>
+                    <span class="data-detail"><input type="text" class="form-control" name="cID" placeholder="รหัสวิชา"></span>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <span class="data-header">ชื่อวิชา : </span>
-                    <span class="data-detail"><input type="Coursename" class="form-control" id="CourseName" placeholder="ชื่อวิชา"></span>
+                    <span class="data-detail"><input type="text" class="form-control" name="cName" placeholder="ชื่อวิชา"></span>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <span class="data-header">ผู้สอน : </span>
-                    <span class="data-detail"><input type="Teacher" class="form-control" id="Teacher" placeholder="ชื่อผู้สอน"></span>
+                    <span class="data-header">หน่วยกิต : </span>
+                    <span class="data-detail"><input type="text" class="form-control" name="credit" placeholder="หน่วยกิต (1 หรือ 3)"></span>
                   </td>
                 </tr>
               </tbody>
@@ -115,13 +115,13 @@ if ($db->connect_error) {
               <tr>
                 <td>
                   <span class="data-header">จำนวนที่เปิดรับ : </span>
-                  <span class="data-detail"><span class="data-detail"><input type="Seat" class="form-control" id="Seat" placeholder="จำนวนที่เปิดรับ"></span></span>
+                  <span class="data-detail"><span class="data-detail"><input type="text" class="form-control" name="accept_q" placeholder="จำนวนที่เปิดรับ"></span></span>
                 </td>
               </tr>
               <tr>
                 <td>
                   <span class="data-header">ตอนเรียน : </span>
-                  <span class="data-detail"><span class="data-detail"><input type="Section" class="form-control" id="Section" placeholder="ตอนเรียน"></span></span>
+                  <span class="data-detail"><span class="data-detail"><input type="text" class="form-control" name="secNo" placeholder="ตอนเรียน"></span></span>
                 </td>
               </tr>
               <tr>

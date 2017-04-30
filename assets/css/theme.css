@@ -26,12 +26,33 @@
   /*padding-right: 200;*/
 }
 
-.navbar-btn:hover,
-.navbar-btn:focus {
-  background-color: transparent;
-  color: #18a59f;
+.btn-primary2 .active .logout,
+.btn-primary2 .active .logout:focus,
+.btn-primary2 .active .logout:active,
+.btn-primary2 .active .logout:hover,
+.btn-primary2 .active .logout:active:hover{
+  background-color: #A51818;
+  color: white;
+  border-color: #A51818;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:active:hover{
+  background-color: #18a59f;
+  color: white;
   border-color: #18a59f;
 }
+
+
+.logout{
+  background-color: #A51818;
+  color: white;
+  border-color: #A51818;
+}
+
+
 
 .nav > li > a:hover{
     background-color:#FCC;

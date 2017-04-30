@@ -3,16 +3,16 @@ include('config.php');
 include('session.php');
 // Check connection
 if ($db->connect_error) {
-   die("Connection failed: " . $db->connect_error);
+    die("Connection failed: " . $db->connect_error);
 }
-if($_SERVER["REQUEST_METHOD"] == "GET") {
-   #min, max year
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    #min, max year
    $teach_year_query = "SELECT MIN(t.year) AS min, MAX(t.year) AS max FROM teach t WHERE t.teacher_personalID = $login_personalID";
-   $teach_year_result = mysqli_query($db, $teach_year_query);
+    $teach_year_result = mysqli_query($db, $teach_year_query);
 }
 
 if ($teach_year_result->num_rows > 0) {
-   $teach_year_row = $teach_year_result->fetch_assoc();
+    $teach_year_row = $teach_year_result->fetch_assoc();
 }
 
 ?>
@@ -53,7 +53,7 @@ if ($teach_year_result->num_rows > 0) {
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
-        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
+        <a href='user_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>
@@ -74,8 +74,8 @@ if ($teach_year_result->num_rows > 0) {
               <label for="year">ปีการศึกษา</label>
               <select class="btn btn-primary" id="year" onchange="getCourse(<?php echo $login_personalID; ?>, this.value, term.value)">
                 <?php
-                  for($year = $teach_year_row['max']; $year >= $teach_year_row['min']; $year--) {
-                    echo '<option value="'.$year.'">'.($year+543).'</option>';
+                  for ($year = $teach_year_row['max']; $year >= $teach_year_row['min']; $year--) {
+                      echo '<option value="'.$year.'">'.($year+543).'</option>';
                   }
                 ?>
               </select>

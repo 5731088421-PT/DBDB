@@ -50,9 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
-        <a href='user_detail.php' ><button class="btn btn-primary navbar-btn navbar-right <?php if (!$_GET['id']) {
-    echo ' active';
-} ?>" type="button"> <span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>บัญชีผู้ใช้</button></a>
+        <a href='logout.php' ><button class="btn btn-primary2 navbar-btn navbar-right active logout" type="button"> <span class="glyphicon glyphicon-log-out" style="margin-right:5px;"></span>ออกจากระบบ</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
           <li><a href="student.php">ข้อมูลนิสิต</a></li>

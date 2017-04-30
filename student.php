@@ -5,8 +5,8 @@ include('session.php');
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
-if(!$_GET['pagenum']) {
-  $pagenum = 0;
+if (!$_GET['pagenum']) {
+    $pagenum = 0;
 }
 $offset = 5 * intval($pagenum);
 
@@ -41,7 +41,7 @@ $year = 2015;
         </a>
       </div>
       <div class="collapse navbar-collapse" id="navcol-1">
-        <a href='staff_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user"></span>บัญชีผู้ใช้</button></a>
+        <a href='user_detail.php' ><button class="btn btn-primary navbar-btn navbar-right" type="button"> <span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
           <li class="active"><a href="student.php">ข้อมูลนิสิต</a></li>
@@ -103,17 +103,17 @@ $year = 2015;
                     $intermission ="SELECT SUM(isNotEnd(endDate)) AS isIntermission FROM intermission GROUP BY student_personalID HAVING student_personalID = {$row['personalID']}";
                     $abroad_result = mysqli_query($db, $abroad);
                     $intermission_result = mysqli_query($db, $intermission);
-                    if($abroad_result->num_rows>0){
-                      $abroadrow =$abroad_result->fetch_assoc();
-                      $isAbroad = $abroadrow['isAbroad'];
+                    if ($abroad_result->num_rows>0) {
+                        $abroadrow =$abroad_result->fetch_assoc();
+                        $isAbroad = $abroadrow['isAbroad'];
                     } else {
-                      $isAbroad = 0;
+                        $isAbroad = 0;
                     }
-                    if($intermission_result->num_rows>0){
-                      $intermissionrow =$intermission_result->fetch_assoc();
-                      $isIntermission = $intermissionrow['isIntermission'];
+                    if ($intermission_result->num_rows>0) {
+                        $intermissionrow =$intermission_result->fetch_assoc();
+                        $isIntermission = $intermissionrow['isIntermission'];
                     } else {
-                      $isIntermission =0;
+                        $isIntermission =0;
                     }
                     echo "              <tr>
                                     <div class='student-row-box'>

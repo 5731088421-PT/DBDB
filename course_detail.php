@@ -64,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       <div class="col-md-12">
         <div class="function-head-block">
           <div class="option-block">
-            <a href="course_addstudent.php" style="margin-right:15px;">
+            <a href='course_addstudent.php?cID=2110594&term=2&year=2016&secNo=1'>
             <div class="btn btn-primary option-right" >
               เพิ่มนิสิต
             </div>
             </a>
-            <a href="course_addgrade.php">
+            <a href='course_addgrade.php?cID=cID=2110594&term=2&year=2016&secNo=1'>
             <div class="btn btn-primary option-right" >
               บันทึกผลการเรียน
             </div>
@@ -163,8 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                   <td>".$i++."</td>
                   <td>".$row['sID']."</td>
                   <td>".$row['fName']." ". $row['lName']."</td>
-                  <td>".$row['grade']."</td>
-                  <td>".$row['attendance']."</td>
+                  <td>"<input type="grade" class="form-control" id="grade" placeholder=".$row['grade'].">"</td>
+                  <td>"<input type="grade" class="form-control" id="grade" placeholder=".$row['attendance'].">"</td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
                     <a href='enroll_delete.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-delete'>ลบ</button></a>

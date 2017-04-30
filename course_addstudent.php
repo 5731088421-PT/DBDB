@@ -98,7 +98,7 @@ if ($db->connect_error) {
           <div class="data-box-header">
             สถานะ
           </div>
-          <table style="width:100%;" class="dashboard-table">
+          <table style="width:95%;" class="dashboard-table">
             <tbody>
               <tr>
                 <td>
@@ -116,6 +116,11 @@ if ($db->connect_error) {
                 <td>
                   <span class="data-header">ตอนเรียน : </span>
                   <span class="data-detail"><?php echo $course_row['secNo']; ?></span>
+                </td>
+              </tr>
+              <tr style="margin-top:15px;">
+                <td>
+                  <button type="submit" class="btn btn-primary btn-block">บันทึกข้อมูล</button>
                 </td>
               </tr>
             </tbody>
@@ -136,8 +141,6 @@ if ($db->connect_error) {
                 <th style="width:70px; text-align:center;"></th>
                 <th style="width:140px;">เลขประจำตัวนิสิต</th>
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:120px;">ผลการศึกษา</th>
-                <th style="width:120px;">การเข้าเรียน</th>
                 <th style="width:145px;">การดำเนินการ</th>
               </tr>
             </thead>
@@ -151,11 +154,9 @@ if ($db->connect_error) {
                   <td>".$i++."</td>
                   <td>".$row['sID']."</td>
                   <td>".$row['fName']." ". $row['lName']."</td>
-                  <td>".$row['grade']."</td>
-                  <td>".$row['attendance']."</td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                    <a href='enroll_delete.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-delete'>ลบ</button></a>
+                    <a href='fillll.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn'>เพิ่ม</button></a>
                   </td>
                   </div>
                   </tr>";

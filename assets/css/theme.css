@@ -36,6 +36,13 @@
   border-color: #A51818;
 }
 
+.btn-primary{
+  background-color: #18a59f;
+  color: white;
+  border-color: #18a59f;
+}
+
+
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active,
@@ -234,4 +241,10 @@
 .dropdown-toggle{
   background-color: #18A59F;
   border-color: transparent;
+}
+
+.option-right{
+  display: inline-block;
+  float: right;
+  margin-left: 15px;
 }

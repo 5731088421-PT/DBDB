@@ -57,21 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <!--div class="function-head-block">
+        <div class="function-head-block">
           <div class="option-block">
-            <div class="dropdown">ปีการศึกษา
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">2559
-                    <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">2559</a></li>
-                <li><a href="#">2558</a></li>
-                <li><a href="#">2557</a></li>
-              </ul>
-            </div>
-          </div-->
             <div class="function-head-icon"><img src="assets/img/course_detail_icon.png" alt="Course detail" /></div>
-          <div class="function-head-text"><?php echo $course_row['cID']; ?>
+            <div class="function-head-text"><?php echo $course_row['cID']; ?>
             <div class="function-head-subtext"><?php echo $course_row['cName']; ?></div>
+          </div>
           </div>
         </div>
       </div>
@@ -129,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               </tr>
               <tr>
                 <td>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary btn-block">บันทึกข้อมูล</button>
                 </td>
               </tr>
             </form>

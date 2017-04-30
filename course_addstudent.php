@@ -9,21 +9,21 @@ $secNo = $_GET['secNo'];
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $course_query = "SELECT Te.cID,cName,credit,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID
-    AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
-    $course_result = mysqli_query($db, $course_query);
-    $course_row = $course_result ->fetch_assoc();
-    $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
-    $student_result = mysqli_query($db, $student_query);
-    $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
-    $basic_result = mysqli_query($db, $basic_info);
-    $basic_row = $basic_result->fetch_assoc();
-    $enroll = "SELECT COUNT(*) AS total FROM enroll E WHERE E.cID = $cID AND term = $term AND year = $year AND secNo = $secNo";
-    $enroll_result = mysqli_query($db, $enroll);
-    $enroll_row = $enroll_result -> fetch_assoc();
-    $db->close();
-}
+// if ($_SERVER["REQUEST_METHOD"] == "GET") {
+//     $course_query = "SELECT Te.cID,cName,credit,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID
+//     AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
+//     $course_result = mysqli_query($db, $course_query);
+//     $course_row = $course_result ->fetch_assoc();
+//     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
+//     $student_result = mysqli_query($db, $student_query);
+//     $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
+//     $basic_result = mysqli_query($db, $basic_info);
+//     $basic_row = $basic_result->fetch_assoc();
+//     $enroll = "SELECT COUNT(*) AS total FROM enroll E WHERE E.cID = $cID AND term = $term AND year = $year AND secNo = $secNo";
+//     $enroll_result = mysqli_query($db, $enroll);
+//     $enroll_row = $enroll_result -> fetch_assoc();
+//     $db->close();
+// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,21 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <div class="row">
       <div class="col-md-12">
         <div class="function-head-block">
-          <div class="option-block">
-            <a href="course_addstudent.php" style="margin-right:15px;">
-            <div class="btn btn-primary option-right" >
-              เพิ่มนิสิต
-            </div>
-            </a>
-            <a href="course_addgrade.php">
-            <div class="btn btn-primary option-right" >
-              บันทึกผลการเรียน
-            </div>
-            </a>
-          </div>
           <div class="function-head-icon"><img src="assets/img/course_detail_icon.png" alt="Course detail" /></div>
-          <div class="function-head-text"><?php echo $course_row['cID']; ?>
-            <div class="function-head-subtext"><?php echo $course_row['cName']; ?></div>
+          <div class="function-head-text">Add Student
+            <div class="function-head-subtext">เพิ่มนิสิต
           </div>
         </div>
         </div>

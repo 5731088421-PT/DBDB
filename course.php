@@ -86,7 +86,13 @@ if ($teach_year_result->num_rows > 0) {
                 <option value="2">2</option>
               </select>
             </div>
+            <a href="course_add.php">
+            <div class="btn btn-primary option-right" >
+              เพิ่มรายวิชา
+            </div>
+            </a>
           </div>
+
           <div class="function-head-icon"><img src="assets/img/course_icon.png" alt="Course" /></div>
           <div class="function-head-text">Course
             <div class="function-head-subtext">ข้อมูลรายวิชา</div>

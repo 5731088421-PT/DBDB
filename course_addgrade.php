@@ -72,7 +72,7 @@ if ($db->connect_error) {
         </div>
       </div>
 
-<form class="" action="index.html" method="post">
+
   <div class="container">
     <div class="row">
       <div class="col-md-8">
@@ -157,6 +157,7 @@ if ($db->connect_error) {
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
                 <th style="width:120px;">ผลการศึกษา</th>
                 <th style="width:120px;">การเข้าเรียน</th>
+                <th style="width:145px;">การดำเนินการ</th>
               </tr>
             </thead>
             <tbody>
@@ -164,14 +165,21 @@ if ($db->connect_error) {
               $i=1;
                 while ($row= $student_result->fetch_assoc()) {
                     echo "
+
                   <tr>
+                  <form class="" action="index.html" method="post">
                   <div class='student-row-box'>
                   <td>".$i++."</td>
                   <td>".$row['sID']."</td>
                   <td>".$row['fName']." ". $row['lName']."</td>
-                  <td>".$row['grade']."</td>
-                  <td>".$row['attendance']."</td>
+                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['grade']."></td>
+                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['attendance']."></td>
+                  <td>
+                  <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
+                  <a href='enroll_แก้ด้วยนะจ๊ะ.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button type="submit" class='btn btn-primary'>เพิ่ม</button></a>
+                  </td>
                   </div>
+                  </form>
                   </tr>";
                 }
               ?>
@@ -181,7 +189,6 @@ if ($db->connect_error) {
       </div>
     </div>
   </div>
-  </form>
 
 
   <footer class="site-footer">

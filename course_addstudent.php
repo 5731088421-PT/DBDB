@@ -119,11 +119,6 @@ if ($db->connect_error) {
                   <span class="data-detail"><?php echo $course_row['secNo']; ?></span>
                 </td>
               </tr>
-              <tr style="margin-top:15px;">
-                <td>
-                  <button type="submit" class="btn btn-primary btn-block">บันทึกข้อมูล</button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -142,7 +137,7 @@ if ($db->connect_error) {
                 <th style="width:70px; text-align:center;"></th>
                 <th style="width:140px;">เลขประจำตัวนิสิต</th>
                 <th style="min-width:100px;">ชื่อ-สกุล</th>
-                <th style="width:145px;">การดำเนินการ</th>
+                <th style="width:150px;">การดำเนินการ</th>
               </tr>
             </thead>
             <tbody>
@@ -157,7 +152,7 @@ if ($db->connect_error) {
                   <td>".$row['fName']." ". $row['lName']."</td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                    <a href='fillll.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn'>เพิ่ม</button></a>
+                    <a href='fillll.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-primary'>เพิ่ม</button></a>
                   </td>
                   </div>
                   </tr>";

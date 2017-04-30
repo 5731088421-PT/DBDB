@@ -9,7 +9,7 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $course_query = "SELECT Te.cID,cName,credit,enroll_q,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID AND S.term = $term AND S.year =$year AND C.cID =$cID";
+    $course_query = "SELECT Te.cID,cName,credit,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID AND S.term = $term AND S.year =$year AND C.cID =$cID";
     $course_result = mysqli_query($db, $course_query);
     $course_row = $course_result->fetch_assoc();
     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";

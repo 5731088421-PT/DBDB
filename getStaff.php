@@ -59,7 +59,7 @@
               <td></td>
               <td>
               <a href='staff_detail.php?id={$row['personalID']}'><button class='btn btn-detail'>ดูข้อมูล</button></a>
-              <button class='btn btn-delete'>ลบ</button>
+              <a href='staff_delete.php?id={$row['personalID']}'><button class='btn btn-delete'>ลบ</button></a>
               </td>
               </div>
               </tr>";

@@ -19,19 +19,21 @@
         if ($student_result->num_rows > 0) {
           while($student_row = $student_result->fetch_assoc()) {
             $year = $semesterYear - (int)substr($student_row['sID'],0,2) + 1;
-            if(is_null($overview) || !array_key_exists($year,$overview)) {
-              //[0,0,0,0] => [amount, intermission, probation, award]
-              $overview[$year] = [0,0,0,0];
-            }
-            $overview[$year][0]+=1; //increase amount
-            if($student_row['isSick']) {
-              $overview[$year][1]+=1;
-            }
-            if($student_row['isPro']) {
-              $overview[$year][2]+=1;
-            }
-            if(!is_null($student_row['awardID'])) {
-              $overview[$year][3]+=1;
+            if($year>=1) {
+              if(is_null($overview) || !array_key_exists($year,$overview)) {
+                //[0,0,0,0] => [amount, intermission, probation, award]
+                $overview[$year] = [0,0,0,0];
+              }
+              $overview[$year][0]+=1; //increase amount
+              if($student_row['isSick']) {
+                $overview[$year][1]+=1;
+              }
+              if($student_row['isPro']) {
+                $overview[$year][2]+=1;
+              }
+              if(!is_null($student_row['awardID'])) {
+                $overview[$year][3]+=1;
+              }
             }
           }
         }

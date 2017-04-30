@@ -4,12 +4,14 @@ include('session.php');
 $year = $_GET['year'];
 $term = $_GET['term'];
 $cID = $_GET['cID'];
+$secNo = $_GET['secNo'];
 // Check connection
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $course_query = "SELECT Te.cID,cName,credit,enroll_q,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID AND S.term = $term AND S.year =$year AND C.cID =$cID";
+    $course_query = "SELECT Te.cID,cName,credit,enroll_q,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID
+    AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
     $course_result = mysqli_query($db, $course_query);
     $course_row = $course_result ->fetch_assoc();
     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
@@ -17,6 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
     $basic_result = mysqli_query($db, $basic_info);
     $basic_row = $basic_result->fetch_assoc();
+    $enroll = "SELECT COUNT(*) AS total FROM enroll E WHERE E.cID = $cID AND term = $term AND year = $year AND secNo = $secNo";
+    $enroll_result = mysqli_query($db,$enroll);
+    $enroll_row = $enroll_result -> fetch_assoc();
     $db->close();
 }
 ?>
@@ -108,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               <tr>
                 <td>
                   <span class="data-header">จำนวนที่ลงทะเบียน : </span>
-                  <span class="data-detail"><?php echo $course_row['enroll_q']; ?></span>
+                  <span class="data-detail"><?php echo $enroll_row['total']; ?></span>
                 </td>
               </tr>
               <tr>
@@ -160,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                   <td>".$row['attendance']."</td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                  <button class='btn btn-delete'>ลบ</button>
+                    <a href='enroll_delete.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-delete'>ลบ</button></a>
                   </td>
                   </div>
                   </tr>";

@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+//include('config.php');
 include('session.php');
 $year = $_GET['year'];
 $term = $_GET['term'];
@@ -11,7 +11,7 @@ if ($db->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $course_query = "SELECT Te.cID,cName,credit,enroll_q,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID AND S.term = $term AND S.year =$year AND C.cID =$cID";
     $course_result = mysqli_query($db, $course_query);
-    $course_row = $course_result ->fetch_assoc();
+    $course_row = $course_result->fetch_assoc();
     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
     $student_result = mysqli_query($db, $student_query);
     $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       </div>
     </div>
   </div>
-  <form class="" action="index.html" method="post">
+
 
   <div class="container">
     <div class="row">
@@ -91,13 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <tr>
                   <td>
                     <span class="data-header">ผู้สอน : </span>
-                    <select class="form-control" id="exampleSelect1">
-                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
-                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
-                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
-                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
-                          <option>รศ. ดร. ธาราทิพย์ สุวรรณศาสตร์</option>
-                      </select>
+                    <?php echo $basic_row['fName'].' '.$basic_row['lName']; ?>
+
                   </td>
                 </tr>
               </tbody>
@@ -118,29 +113,33 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 </td>
               </tr>
               <tr>
+                  <form class="" action="addSection.php?cID=<?php echo $cID ?>" method="post">
                 <td>
                   <span class="data-header">จำนวนที่เปิดรับ : </span>
-                  <input type="seat" class="form-control" id="seat" placeholder="จำนวนนิสิต">
+                  <input  type="text" class="form-control" name="accept_q" placeholder="จำนวนนิสิต"></input>
                 </td>
               </tr>
+
               <tr>
+
                 <td>
                   <span class="data-header">ตอนเรียน : </span>
-                  <input type="section" class="form-control" placeholder="ตอนเรียน">
+                  <input type="text" class="form-control" name="secNo" placeholder="ตอนเรียน"></input>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </td>  
+                  <button type="submit" name="commit" class="btn btn-primary">Submit</button>
+                </td>
               </tr>
+            </form>
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
-</form>
+
 
 
   <footer class="site-footer">

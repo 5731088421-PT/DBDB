@@ -55,11 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 } ?>" type="button"> <span class="glyphicon glyphicon-user" style="margin-right:5px;"></span>บัญชีผู้ใช้</button></a>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="index2.php">ภาพรวม</a></li>
-          <li><a href="student.php">ข้อมูลนิสิต</a></li>
-          <li><a href="course.php">ข้อมูลรายวิชา</a></li>
-          <li  <?php if ($_GET['id']) {
-    echo "class = 'active'";
-} ?>><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>
+          <?php if($login_privilege!="executive"&&$login_privilege!="staff") echo '<li><a href="student.php">ข้อมูลนิสิต</a></li>'; ?>
+          <?php if($login_privilege!="executive"&&$login_privilege!="staff") echo '<li><a href="course.php">ข้อมูลรายวิชา</a></li>'; ?>
+          <?php if($login_privilege!="executive"&&$login_privilege!="teacher") echo '<li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>'; ?>
         </ul>
       </div>
     </div>

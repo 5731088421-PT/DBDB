@@ -14,8 +14,11 @@ if ($db->connect_error) {
      AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
      $course_result = mysqli_query($db, $course_query);
      $course_row = $course_result ->fetch_assoc();
-// แก้ตรงนี้ให้ query นิสิตที่ยังไม่ลงทะเบียน
-     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
+     //$student_query = "SELECT S.sID,P.fName,P.personalID,P.lName FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
+     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName FROM personnel P,student S
+                      WHERE S.personalID = P.personalID  AND S.personalID  NOT IN
+						         (SELECT student_personalID FROM enroll E
+						         WHERE E.term = $term AND E.year = $year AND E.secNo = $secNo);";
      $student_result = mysqli_query($db, $student_query);
      $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
      $basic_result = mysqli_query($db, $basic_info);
@@ -152,7 +155,7 @@ if ($db->connect_error) {
                   <td>".$row['fName']." ". $row['lName']."</td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                    <a href='fillll.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-primary'>เพิ่ม</button></a>
+                    <a href='student_add.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button class='btn btn-primary'>เพิ่ม</button></a>
                   </td>
                   </div>
                   </tr>";

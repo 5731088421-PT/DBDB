@@ -10,7 +10,7 @@ if (!$_GET['pagenum']) {
 }
 $offset = 5 * intval($pagenum);
 
-$basic_info = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID LIMIT $offset,5";
+$basic_info = "SELECT P.personalID,P.fName,P.lName,S.sID FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = $login_personalID";
 
 $basic_result = mysqli_query($db, $basic_info);
 $sql2 = "SELECT count(*) as total FROM personnel P,student S WHERE P.personalID = S.personalID AND S.advisorID = {$login_personalID}";

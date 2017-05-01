@@ -9,21 +9,21 @@ $secNo = $_GET['secNo'];
 if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
-// if ($_SERVER["REQUEST_METHOD"] == "GET") {
-//     $course_query = "SELECT Te.cID,cName,credit,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID
-//     AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
-//     $course_result = mysqli_query($db, $course_query);
-//     $course_row = $course_result ->fetch_assoc();
-//     $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
-//     $student_result = mysqli_query($db, $student_query);
-//     $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
-//     $basic_result = mysqli_query($db, $basic_info);
-//     $basic_row = $basic_result->fetch_assoc();
-//     $enroll = "SELECT COUNT(*) AS total FROM enroll E WHERE E.cID = $cID AND term = $term AND year = $year AND secNo = $secNo";
-//     $enroll_result = mysqli_query($db, $enroll);
-//     $enroll_row = $enroll_result -> fetch_assoc();
-//     $db->close();
-// }
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $course_query = "SELECT Te.cID,cName,credit,accept_q,S.term,S.year,Te.secNo FROM teach Te,section S,course C WHERE Te.teacher_personalID = $login_personalID AND S.cID = C.cID AND C.cID = Te.cID
+    AND S.term = $term AND S.year =$year AND C.cID =$cID AND S.secNo= Te.secNo AND S.secNo = $secNo";
+    $course_result = mysqli_query($db, $course_query);
+    $course_row = $course_result ->fetch_assoc();
+    $student_query = "SELECT S.sID,P.fName,P.personalID,P.lName,E.grade,E.attendance FROM enroll E,personnel P,student S WHERE P.personalID = E.student_personalID AND term= $term AND year= $year AND cID =$cID AND S.personalID = P.personalID";
+    $student_result = mysqli_query($db, $student_query);
+    $basic_info = "SELECT fName,lName FROM personnel WHERE personnel.personalID = $login_personalID";
+    $basic_result = mysqli_query($db, $basic_info);
+    $basic_row = $basic_result->fetch_assoc();
+    $enroll = "SELECT COUNT(*) AS total FROM enroll E WHERE E.cID = $cID AND term = $term AND year = $year AND secNo = $secNo";
+    $enroll_result = mysqli_query($db, $enroll);
+    $enroll_row = $enroll_result -> fetch_assoc();
+    $db->close();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -130,11 +130,11 @@ if ($db->connect_error) {
                   <span class="data-detail"><?php echo $course_row['secNo']; ?></span>
                 </td>
               </tr>
-                <tr>
+                <!--tr>
                   <td>
                     <button type="submit" class="btn btn-primary btn-block">บันทึกข้อมูล</button>
                   </td>
-                </tr>
+                </tr-->
             </tbody>
           </table>
         </div>
@@ -165,22 +165,27 @@ if ($db->connect_error) {
               $i=1;
                 while ($row= $student_result->fetch_assoc()) {
                     echo "
-
                   <tr>
-                  <form class="" action="index.html" method="post">
+                  <form class='' action='student_grade.php' method='post'>
+                  <input type='hidden' name='cID' value='$cID'>
+                  <input type='hidden' name='secNo' value='$secNo'>
+                  <input type='hidden' name='term' value='$term'>
+                  <input type='hidden' name='year' value='$year'>
+                  <input type='hidden' name='personalID' value='{$row['personalID']}'>
                   <div class='student-row-box'>
                   <td>".$i++."</td>
                   <td>".$row['sID']."</td>
                   <td>".$row['fName']." ". $row['lName']."</td>
-                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['grade']."></td>
-                  <td><input type='grade' class='form-control' id='grade' placeholder=".$row['attendance']."></td>
+                  <td><input type='grade' class='form-control' id='grade' name='grade' value=".$row['grade']."></td>
+                  <td><input type='grade' class='form-control' id='attendance' name='attendance' value=".$row['attendance']."></td>
                   <td>
                   <a href='student_detail.php?id=".$row['personalID']."' ><button class='btn btn-detail'>ดูข้อมูล</button></a>
-                  <a href='enroll_แก้ด้วยนะจ๊ะ.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ><button type="submit" class='btn btn-primary'>เพิ่ม</button></a>
+                  <button type='submit' class='btn btn-primary'>เพิ่ม</button>
                   </td>
                   </div>
                   </form>
                   </tr>";
+                  //back up <a href='student_grade.php?id={$row['personalID']}&cID=$cID&year=$year&term=$term&secNo=$secNo' ></a>
                 }
               ?>
             </tbody>

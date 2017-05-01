@@ -64,12 +64,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
       <div class="col-md-12">
         <div class="function-head-block">
           <div class="option-block">
-            <a href='course_addstudent.php?cID=2110594&term=2&year=2016&secNo=1'>
+            <a href='course_addstudent.php<?php echo "?cID=$cID&term=$term&year=$year&secNo=$secNo"; ?>'>
             <div class="btn btn-primary option-right" >
               เพิ่มนิสิต
             </div>
             </a>
-            <a href='course_addgrade.php?cID=cID=2110594&term=2&year=2016&secNo=1'>
+            <a href='course_addgrade.php?<?php echo "cID=$cID&term=$term&year=$year&secNo=$secNo"; ?>'>
             <div class="btn btn-primary option-right" >
               บันทึกผลการเรียน
             </div>

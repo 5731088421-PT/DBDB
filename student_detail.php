@@ -89,7 +89,7 @@ if ($enroll_year_result->num_rows > 0) {
           <li><a href="index2.php">ภาพรวม</a></li>
           <?php if($login_privilege!="executive"&&$login_privilege!="staff") echo '<li><a href="student.php">ข้อมูลนิสิต</a></li>'; ?>
           <?php if($login_privilege!="executive"&&$login_privilege!="staff") echo '<li><a href="course.php">ข้อมูลรายวิชา</a></li>'; ?>
-          <?php if($login_privilege!="executive"&&$login_privilege!="teacher") echo '<li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>'; ?>
+          <?php //if($login_privilege!="executive"&&$login_privilege!="teacher") echo '<li><a href="staff.php">ข้อมูลเจ้าหน้าที่</a></li>'; ?>
         </ul>
       </div>
     </div>
